@@ -1,6 +1,6 @@
 # synch-plugin
 
-This plugin is responsible for getting cureent location of device.
+This plugin is responsible for getting cureent Location of device, Schedule notification, Store data in local storage, get Network Related information like network is connected or not and type of the connection.
 
 ## Install
 
