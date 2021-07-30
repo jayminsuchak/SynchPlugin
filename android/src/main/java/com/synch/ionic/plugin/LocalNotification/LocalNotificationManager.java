@@ -119,13 +119,6 @@ public class LocalNotificationManager {
     }
 
     // TODO Progressbar support
-    // TODO System categories (DO_NOT_DISTURB etc.)
-    // TODO control visibility by flag Notification.VISIBILITY_PRIVATE
-    // TODO Group notifications (setGroup, setGroupSummary, setNumber)
-    // TODO use NotificationCompat.MessagingStyle for latest API
-    // TODO expandable notification NotificationCompat.MessagingStyle
-    // TODO media style notification support NotificationCompat.MediaStyle
-    // TODO custom small/large icons
     private void buildNotification(NotificationManagerCompat notificationManager, LocalNotification localNotification, PluginCall call) {
         String channelId = DEFAULT_NOTIFICATION_CHANNEL_ID;
         if (localNotification.getChannelId() != null) {

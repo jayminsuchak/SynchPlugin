@@ -20,7 +20,6 @@ import com.synch.ionic.plugin.GeoLocation.SynchPlugin;
 import com.synch.ionic.plugin.LocalNotification.LocalNotification;
 import com.synch.ionic.plugin.LocalNotification.LocalNotificationManager;
 import com.synch.ionic.plugin.GeoLocation.LocationResultCallback;
-import com.synch.ionic.plugin.LocalNotification.NotificationChannelManager;
 import com.synch.ionic.plugin.LocalNotification.NotificationStorage;
 import com.synch.ionic.plugin.Storage.Storage;
 import com.synch.ionic.plugin.Storage.StorageConfiguration;
@@ -40,7 +39,6 @@ public class SynchPluginPlugin extends Plugin {
     private static Bridge staticBridge = null;
     private LocalNotificationManager manager;
     private NotificationStorage notificationStorage;
-    private NotificationChannelManager notificationChannelManager;
 
     private Network network;
     public static final String NETWORK_CHANGE_EVENT = "networkStatusChange";
@@ -50,10 +48,10 @@ public class SynchPluginPlugin extends Plugin {
     @Override
     public void load() {
         implementation = new SynchPlugin(getContext());
+
         notificationStorage = new NotificationStorage(getContext());
         manager = new LocalNotificationManager(notificationStorage, getActivity(), getContext(), this.bridge.getConfig());
         manager.createNotificationChannel();
-        notificationChannelManager = new NotificationChannelManager(getActivity());
         staticBridge = this.bridge;
 
         network = new Network(getContext());
@@ -95,25 +93,7 @@ public class SynchPluginPlugin extends Plugin {
     @PermissionCallback
     private void completeCurrentPosition(PluginCall call) {
         if (getPermissionState("location") == PermissionState.GRANTED) {
-            boolean enableHighAccuracy = call.getBoolean("enableHighAccuracy", false);
-            int timeout = call.getInt("timeout", 10000);
-
-            implementation.sendLocation(
-                    enableHighAccuracy,
-                    timeout,
-                    true,
-                    new LocationResultCallback() {
-                        @Override
-                        public void success(Location location) {
-                            call.resolve(getJSObjectForLocation(location));
-                        }
-
-                        @Override
-                        public void error(String message) {
-                            call.reject(message);
-                        }
-                    }
-            );
+           getPosition(call);
         } else {
             call.reject("Location permission was denied");
         }

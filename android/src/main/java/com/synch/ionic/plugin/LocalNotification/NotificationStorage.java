@@ -21,8 +21,6 @@ public class NotificationStorage {
     // Key used to save action types
     private static final String ACTION_TYPES_ID = "ACTION_TYPE_STORE";
 
-    private static final String ID_KEY = "notificationIds";
-
     private Context context;
 
     public NotificationStorage(Context context) {
